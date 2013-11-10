@@ -74,7 +74,7 @@ public class FluentIterable2Test {
     public void shouldForEach() throws Exception {
 
         final List<Integer> lists = Lists.newArrayList();
-        from(list).forEach(new Function1<Integer>() {
+        from(list).forEach(new Action<Integer>() {
             @Override
             public void apply(Integer input) {
                 if (input > 8) {

@@ -49,16 +49,16 @@ public class FluentIterable2<E> extends FluentIterable<E> {
         });
     }
 
-    public void forEach(Function1<E> function) {
+    public void forEach(Action<E> action) {
         final Iterator<E> iterator = iterator();
         while (iterator.hasNext()) {
-            function.apply(iterator.next());
+            action.apply(iterator.next());
         }
     }
 
     public <K, V> Map<K, V> toMap(final Function<? super E, K> keyFunction, final Function<? super E, V> valueFunction) {
         final HashMap<K, V> kvHashMap = new HashMap<K, V>();
-        forEach(new Function1<E>() {
+        forEach(new Action<E>() {
             @Override
             public void apply(E input) {
                 kvHashMap.put(keyFunction.apply(input), valueFunction.apply(input));
@@ -70,7 +70,7 @@ public class FluentIterable2<E> extends FluentIterable<E> {
 
     public FluentIterable2<E> distinct() {
         final Set<E> set = new LinkedHashSet<E>();
-        forEach(new Function1<E>() {
+        forEach(new Action<E>() {
             @Override
             public void apply(E input) {
                 set.add(input);
@@ -82,7 +82,7 @@ public class FluentIterable2<E> extends FluentIterable<E> {
 
     public FluentIterable2<E> distinct(Comparator<E> comparator) {
         final Set<E> set = new TreeSet<E>(comparator);
-        forEach(new Function1<E>() {
+        forEach(new Action<E>() {
             @Override
             public void apply(E input) {
                 set.add(input);
@@ -110,7 +110,7 @@ public class FluentIterable2<E> extends FluentIterable<E> {
 
     public <T> FluentIterable<Group<T, E>> groupBy(final Function<E, T> function) {
         final HashMap<T, List<E>> group = Maps.newHashMap();
-        forEach(new Function1<E>() {
+        forEach(new Action<E>() {
             @Override
             public void apply(E input) {
                 final T key = function.apply(input);

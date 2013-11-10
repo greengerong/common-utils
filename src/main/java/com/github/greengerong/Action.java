@@ -4,7 +4,7 @@ package com.github.greengerong;
 import com.google.common.annotations.GwtCompatible;
 
 @GwtCompatible
-public interface Function1<T> {
+public interface Action<T> {
 
     void apply(T input);
 
