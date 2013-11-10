@@ -227,5 +227,31 @@ public class FluentIterable2Test {
         assertThat(list.get(3).getId(), is(9));
     }
 
+    @Test
+    public void shouldOrderByDefault() throws Exception {
+        final List<Integer> lists = from(list).orderBy().toList();
 
+        //(1, 2, 3, 4, 9, 6, 3, 8, 9);
+        assertThat(list.get(0), is(1));
+        assertThat(list.get(1), is(2));
+        assertThat(list.get(2), is(3));
+        assertThat(list.get(3), is(4));
+        assertThat(list.get(4), is(9));
+        assertThat(list.get(5), is(6));
+        assertThat(list.get(6), is(3));
+        assertThat(list.get(7), is(8));
+        assertThat(list.get(8), is(9));
+
+        assertThat(lists.get(0), is(1));
+        assertThat(lists.get(1), is(2));
+        assertThat(lists.get(2), is(3));
+        assertThat(lists.get(3), is(3));
+        assertThat(lists.get(4), is(4));
+        assertThat(lists.get(5), is(6));
+        assertThat(lists.get(6), is(8));
+        assertThat(lists.get(7), is(9));
+        assertThat(lists.get(8), is(9));
+
+
+    }
 }

@@ -134,6 +134,15 @@ public class FluentIterable2<E> extends FluentIterable<E> {
         return new FluentIterable2<E>(toSortedList(comparator));
     }
 
+    public FluentIterable2<E> orderBy() {
+        return orderBy(new Comparator<E>() {
+            @Override
+            public int compare(E e, E e2) {
+                return ((Comparable) e).compareTo(e2);
+            }
+        });
+    }
+
     public <T> FluentIterable2<E> orderBy(final Function<E, ? super Comparable<T>> comparable) {
         return orderBy(new Comparator<E>() {
             @Override
@@ -144,4 +153,6 @@ public class FluentIterable2<E> extends FluentIterable<E> {
             }
         });
     }
+
+
 }
