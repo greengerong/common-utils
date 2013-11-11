@@ -184,4 +184,32 @@ public class FluentIterable2<E> extends FluentIterable<E> {
         return lastValue;
     }
 
+    public FluentIterable2<E> take(int count) {
+        return new FluentIterable2<E>(limit(count));
+    }
+
+    public FluentIterable2<E> takeWhere(Predicate<E> predicate) {
+        final List<E> list = Lists.newArrayList();
+        final Iterator<E> iterator = iterator();
+        E d = null;
+        while (iterator.hasNext() && !predicate.apply(d = iterator.next())) {
+            list.add(d);
+        }
+        return new FluentIterable2<E>(list);
+    }
+
+    public <T, R> FluentIterable2<R> zip(final Iterator<T> secondIterator, final Function3<E, T, R> function) {
+        checkNotNull(secondIterator);
+        final List<E> first = Lists.newArrayList(iterable);
+        final List<T> second = Lists.newArrayList(secondIterator);
+        final List<R> results = Lists.newArrayList();
+        int len = Math.min(first.size(), second.size());
+        for (int i = 0; i < len; i++) {
+            final R result = function.apply(first.get(i), second.get(i));
+            results.add(result);
+
+        }
+        return new FluentIterable2<R>(results);
+    }
+
 }

@@ -4,6 +4,7 @@ package com.github.greengerong;
 import com.google.common.base.Function;
 import com.google.common.base.Predicate;
 import com.google.common.collect.ImmutableList;
+import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 import org.junit.Before;
 import org.junit.Test;
@@ -277,7 +278,6 @@ public class FluentIterable2Test {
             }
         });
         assertThat(sum, is(45));
-
     }
 
     @Test
@@ -289,5 +289,25 @@ public class FluentIterable2Test {
             }
         });
         assertThat(sum, is(45));
+    }
+
+    @Test
+    public void shouldTake3() throws Exception {
+        final ImmutableList<Integer> list = from(dataLists).take(3).toList();
+
+        assertThat(list.toString(), is("[1, 2, 3]"));
+    }
+
+    @Test
+    public void shouldTakeWhereMode3() throws Exception {
+        final FluentIterable2<Integer> list = from(dataLists).takeWhere(new Predicate<Integer>() {
+            @Override
+            public boolean apply(Integer input) {
+                return input % 3 == 0;
+            }
+        });
+        list.toList();
+
+        assertThat(list.toString(), is("[1, 2]"));
     }
 }

@@ -1,1 +1,1 @@
-This file was created by IntelliJ IDEA 12.1.6 for binding GitHub repository
+C# linq APi: [http://www.dotnetperls.com/linq](http://www.dotnetperls.com/linq)
