@@ -212,4 +212,8 @@ public class FluentIterable2<E> extends FluentIterable<E> {
         return new FluentIterable2<R>(results);
     }
 
+    public FluentIterable2<E> skip2(int count) {
+        return new FluentIterable2<E>(super.skip(count));
+    }
+
 }
