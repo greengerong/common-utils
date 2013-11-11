@@ -105,6 +105,18 @@ public class FluentIterable2<E> extends FluentIterable<E> {
         return first().or(defaultValue);
     }
 
+    public E firstOrDefault() {
+        return first().orNull();
+    }
+
+    public E firstOrDefault(Predicate<E> predicate) {
+        return super.firstMatch(predicate).orNull();
+    }
+
+    public E firstOrDefault(E defaultValue, Predicate<E> predicate) {
+        return super.firstMatch(predicate).or(defaultValue);
+    }
+
     public <T> FluentIterable2<T> ofType(Class<T> type) {
         return new FluentIterable2<T>(filter(type)).cast();
     }
