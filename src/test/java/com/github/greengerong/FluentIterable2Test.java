@@ -19,12 +19,12 @@ import static org.junit.Assert.assertThat;
 
 public class FluentIterable2Test {
 
-    private ArrayList<Integer> list;
+    private ArrayList<Integer> dataLists;
     private ArrayList<People> peoples;
 
     @Before
     public void setUp() throws Exception {
-        list = Lists.newArrayList(1, 2, 3, 4, 9, 6, 3, 8, 9);
+        dataLists = Lists.newArrayList(1, 2, 3, 4, 9, 6, 3, 8, 9);
         peoples = new ArrayList<People>();
         peoples.add(new Student(1, "me"));
         peoples.add(new Student(9, "she"));
@@ -34,7 +34,7 @@ public class FluentIterable2Test {
 
     @Test
     public void shouldSelectByCondition() throws Exception {
-        final List<Integer> mapLists = from(list).select(new Function<Integer, Integer>() {
+        final List<Integer> mapLists = from(dataLists).select(new Function<Integer, Integer>() {
             @Override
             public Integer apply(Integer input) {
                 return input * 2;
@@ -48,7 +48,7 @@ public class FluentIterable2Test {
 
     @Test
     public void shouldWhereByCondition() throws Exception {
-        final List<Integer> mapLists = from(list).where(new Predicate<Integer>() {
+        final List<Integer> mapLists = from(dataLists).where(new Predicate<Integer>() {
             @Override
             public boolean apply(Integer input) {
                 return input % 2 == 0;
@@ -74,7 +74,7 @@ public class FluentIterable2Test {
     public void shouldForEach() throws Exception {
 
         final List<Integer> lists = Lists.newArrayList();
-        from(list).forEach(new Action<Integer>() {
+        from(dataLists).forEach(new Action<Integer>() {
             @Override
             public void apply(Integer input) {
                 if (input > 8) {
@@ -110,7 +110,7 @@ public class FluentIterable2Test {
 
     @Test
     public void shouldDistinct() throws Exception {
-        final FluentIterable2<Integer> distinct = from(list).distinct();
+        final FluentIterable2<Integer> distinct = from(dataLists).distinct();
         //1, 2, 3, 4, 9, 6, 3, 8, 9
         assertThat(distinct.size(), is(7));
         assertThat(distinct.get(0), is(1));
@@ -173,7 +173,7 @@ public class FluentIterable2Test {
 
     @Test
     public void shouldGroupBy() throws Exception {
-        final List<Group<String, Integer>> group = from(list).groupBy(new Function<Integer, String>() {
+        final List<Group<String, Integer>> group = from(dataLists).groupBy(new Function<Integer, String>() {
             @Override
             public String apply(Integer input) {
                 return input % 2 == 0 ? "Even" : "Odd";
@@ -229,18 +229,18 @@ public class FluentIterable2Test {
 
     @Test
     public void shouldOrderByDefault() throws Exception {
-        final List<Integer> lists = from(list).orderBy().toList();
+        final List<Integer> lists = from(dataLists).orderBy().toList();
 
         //(1, 2, 3, 4, 9, 6, 3, 8, 9);
-        assertThat(list.get(0), is(1));
-        assertThat(list.get(1), is(2));
-        assertThat(list.get(2), is(3));
-        assertThat(list.get(3), is(4));
-        assertThat(list.get(4), is(9));
-        assertThat(list.get(5), is(6));
-        assertThat(list.get(6), is(3));
-        assertThat(list.get(7), is(8));
-        assertThat(list.get(8), is(9));
+        assertThat(dataLists.get(0), is(1));
+        assertThat(dataLists.get(1), is(2));
+        assertThat(dataLists.get(2), is(3));
+        assertThat(dataLists.get(3), is(4));
+        assertThat(dataLists.get(4), is(9));
+        assertThat(dataLists.get(5), is(6));
+        assertThat(dataLists.get(6), is(3));
+        assertThat(dataLists.get(7), is(8));
+        assertThat(dataLists.get(8), is(9));
 
         assertThat(lists.get(0), is(1));
         assertThat(lists.get(1), is(2));
@@ -252,6 +252,42 @@ public class FluentIterable2Test {
         assertThat(lists.get(7), is(9));
         assertThat(lists.get(8), is(9));
 
+    }
 
+    @Test
+    public void shouldSkipWhereGot8() throws Exception {
+        final FluentIterable2<Integer> lists = from(dataLists).skipWhere(new Predicate<Integer>() {
+            @Override
+            public boolean apply(Integer input) {
+                return input.equals(8);
+            }
+        });
+
+        assertThat(lists.size(), is(2));
+        assertThat(lists.get(0), is(8));
+        assertThat(lists.get(1), is(9));
+    }
+
+    @Test
+    public void shouldSumAllTheValue() throws Exception {
+        final Integer sum = from(dataLists).aggregate(0, new Function2<Integer>() {
+            @Override
+            public Integer apply(Integer input1, Integer input2) {
+                return input1 + input2;
+            }
+        });
+        assertThat(sum, is(45));
+
+    }
+
+    @Test
+    public void shouldSumAllTheValueByType() throws Exception {
+        final Integer sum = from(dataLists).aggregate(int.class, new Function2<Integer>() {
+            @Override
+            public Integer apply(Integer input1, Integer input2) {
+                return input1 + input2;
+            }
+        });
+        assertThat(sum, is(45));
     }
 }

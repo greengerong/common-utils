@@ -7,6 +7,7 @@ import com.google.common.collect.*;
 
 import java.util.*;
 
+import static com.google.common.base.Defaults.defaultValue;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 public class FluentIterable2<E> extends FluentIterable<E> {
@@ -154,5 +155,33 @@ public class FluentIterable2<E> extends FluentIterable<E> {
         });
     }
 
+    public FluentIterable2<E> skipWhere(Predicate<E> predicate) {
+        final Iterator<E> iterator = this.iterator();
+        E d = null;
+        while (iterator.hasNext() && !predicate.apply(d = iterator.next())) ;
+        final List<E> list = Lists.newArrayList();
+        if (d != null) {
+            list.add(d);
+        }
+        while (iterator.hasNext()) {
+            list.add(iterator.next());
+        }
+        return new FluentIterable2<E>(list);
+    }
+
+
+    public E aggregate(final Class<E> type, final Function2<E> function) {
+        return aggregate(defaultValue(type), function);
+    }
+
+    public E aggregate(final E first, final Function2<E> function) {
+        final Iterator<E> iterator = this.iterator();
+        E lastValue = first;
+        while (iterator.hasNext()) {
+            final E next = iterator.next();
+            lastValue = function.apply(lastValue, next);
+        }
+        return lastValue;
+    }
 
 }
