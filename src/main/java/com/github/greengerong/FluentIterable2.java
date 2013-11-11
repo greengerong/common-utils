@@ -18,7 +18,7 @@ public class FluentIterable2<E> extends FluentIterable<E> {
         this.iterable = this;
     }
 
-    FluentIterable2(Iterable<E> iterable) {
+    protected FluentIterable2(Iterable<E> iterable) {
         this.iterable = checkNotNull(iterable);
     }
 
