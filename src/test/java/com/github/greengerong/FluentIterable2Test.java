@@ -9,12 +9,15 @@ import com.google.common.collect.Lists;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 
 import static com.github.greengerong.FluentIterable2.from;
+import static com.google.common.collect.Lists.newArrayList;
+import static java.lang.Integer.valueOf;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
@@ -25,7 +28,7 @@ public class FluentIterable2Test {
 
     @Before
     public void setUp() throws Exception {
-        dataLists = Lists.newArrayList(1, 2, 3, 4, 9, 6, 3, 8, 9);
+        dataLists = newArrayList(1, 2, 3, 4, 9, 6, 3, 8, 9);
         peoples = new ArrayList<People>();
         peoples.add(new Student(1, "me"));
         peoples.add(new Student(9, "she"));
@@ -74,7 +77,7 @@ public class FluentIterable2Test {
     @Test
     public void shouldForEach() throws Exception {
 
-        final List<Integer> lists = Lists.newArrayList();
+        final List<Integer> lists = newArrayList();
         from(dataLists).forEach(new Action<Integer>() {
             @Override
             public void apply(Integer input) {
@@ -155,7 +158,7 @@ public class FluentIterable2Test {
 
     @Test
     public void shouldGetDefaultWhenFirstIsEmpty() throws Exception {
-        final List<Integer> iterable = Lists.newArrayList();
+        final List<Integer> iterable = newArrayList();
         final Integer val = from(iterable).firstOrDefault(1);
 
         assertThat(val, is(1));
@@ -313,8 +316,8 @@ public class FluentIterable2Test {
 
     @Test
     public void shouldZip() throws Exception {
-        final List<Integer> first = Lists.newArrayList(1, 2, 3);
-        final List<Integer> second = Lists.newArrayList(1, 2);
+        final List<Integer> first = newArrayList(1, 2, 3);
+        final List<Integer> second = newArrayList(1, 2);
         final ImmutableList<Integer> list = from(first).zip(second, new Function3<Integer, Integer, Integer>() {
             @Override
             public Integer apply(Integer input1, Integer input2) {
@@ -323,5 +326,12 @@ public class FluentIterable2Test {
         }).toList();
 
         assertThat(list.toString(), is("[1, 4]"));
+    }
+
+    @Test
+    public void shouldFlattenList() throws Exception {
+        final List<Serializable> first = newArrayList(valueOf(1), valueOf(2), newArrayList(valueOf(1), valueOf(2), valueOf(3), newArrayList(8, 9, newArrayList(10, 9))));
+        final ImmutableList<Serializable> list = from(first).flatten().toList();
+        assertThat(list.toString(), is("[1, 2, 1, 2, 3, 8, 9, 10, 9]"));
     }
 }

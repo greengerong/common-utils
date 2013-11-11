@@ -216,4 +216,22 @@ public class FluentIterable2<E> extends FluentIterable<E> {
         return new FluentIterable2<E>(super.skip(count));
     }
 
+    public FluentIterable2<E> flatten() {
+        final List<E> flattenResult = flatten(Lists.newArrayList(iterable));
+        final LinkedList<E> result = Lists.newLinkedList(flattenResult);
+        return new FluentIterable2<E>(result);
+    }
+
+    private List<E> flatten(List<E> flattenList) {
+        final List<E> list = Lists.newArrayList();
+        for (E item : flattenList) {
+            if (item instanceof Iterable) {
+                list.addAll(flatten(Lists.newArrayList((Iterable<E>) item)));
+            } else {
+                list.add(item);
+            }
+        }
+        return list;
+    }
+
 }
