@@ -310,4 +310,18 @@ public class FluentIterable2Test {
 
         assertThat(list.toString(), is("[1, 2]"));
     }
+
+    @Test
+    public void shouldZip() throws Exception {
+        final List<Integer> first = Lists.newArrayList(1, 2, 3);
+        final List<Integer> second = Lists.newArrayList(1, 2);
+        final ImmutableList<Integer> list = from(first).zip(second, new Function3<Integer, Integer, Integer>() {
+            @Override
+            public Integer apply(Integer input1, Integer input2) {
+                return input1 * input2;
+            }
+        }).toList();
+
+        assertThat(list.toString(), is("[1, 4]"));
+    }
 }

@@ -198,10 +198,10 @@ public class FluentIterable2<E> extends FluentIterable<E> {
         return new FluentIterable2<E>(list);
     }
 
-    public <T, R> FluentIterable2<R> zip(final Iterator<T> secondIterator, final Function3<E, T, R> function) {
-        checkNotNull(secondIterator);
+    public <T, R> FluentIterable2<R> zip(final Iterable<T> secondIterable, final Function3<E, T, R> function) {
+        checkNotNull(secondIterable);
         final List<E> first = Lists.newArrayList(iterable);
-        final List<T> second = Lists.newArrayList(secondIterator);
+        final List<T> second = Lists.newArrayList(secondIterable);
         final List<R> results = Lists.newArrayList();
         int len = Math.min(first.size(), second.size());
         for (int i = 0; i < len; i++) {
