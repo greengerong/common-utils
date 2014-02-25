@@ -6,5 +6,5 @@ common-utils [![Build Status](https://travis-ci.org/greengerong/common-utils.png
 
 #### api:
 
-*   [collection](https://github.com/greengerong/common-utils/doc/collection)
-*   [checker](https://github.com/greengerong/common-utils/doc/checker)
+*   [collection](https://github.com/greengerong/common-utils/tree/master/doc/collection)
+*   [checker](https://github.com/greengerong/common-utils/tree/master/doc/checker)
