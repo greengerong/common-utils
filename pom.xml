@@ -1,12 +1,13 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.github.greengerong</groupId>
-    <artifactId>guava-ext</artifactId>
+    <artifactId>common-utils</artifactId>
     <version>0.2-SNAPSHOT</version>
     <packaging>jar</packaging>
 
-    <name>guava-ext</name>
+    <name>common-utils</name>
     <url>http://maven.apache.org</url>
 
     <licenses>
@@ -17,16 +18,16 @@
         </license>
     </licenses>
     <scm>
-        <connection>scm:git:git@github.com:greengerong/guava-ext.git</connection>
-        <developerConnection>scm:git:git@github.com:greengerong/guava-ext.git</developerConnection>
-        <url>git@github.com:greengerong/guava-ext.git</url>
+        <connection>scm:git:git@github.com:greengerong/common-utils.git</connection>
+        <developerConnection>scm:git:git@github.com:greengerong/common-utils.git</developerConnection>
+        <url>git@github.com:greengerong/common-utils.git</url>
     </scm>
     <parent>
         <groupId>org.sonatype.oss</groupId>
         <artifactId>oss-parent</artifactId>
         <version>7</version>
     </parent>
-    <description />
+    <description/>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -34,6 +35,8 @@
         <mockito.version>1.9.5</mockito.version>
         <guava.version>15.0</guava.version>
         <commons.collections.version>20040616</commons.collections.version>
+        <commons-lange.version>2.6</commons-lange.version>
+        <commons-io.version>20030203.000550</commons-io.version>
     </properties>
 
     <dependencies>
@@ -54,12 +57,17 @@
             <version>${mockito.version}</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>commons-lang</groupId>
+            <artifactId>commons-lang</artifactId>
+            <version>${commons-lange.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+            <version>${commons-io.version}</version>
+        </dependency>
 
-        <!--<dependency>-->
-        <!--<groupId>commons-collections</groupId>-->
-        <!--<artifactId>commons-collections</artifactId>-->
-        <!--<version>${commons.collections.version}</version>-->
-        <!--</dependency>-->
 
     </dependencies>
     <distributionManagement>

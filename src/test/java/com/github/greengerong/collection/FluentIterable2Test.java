@@ -1,11 +1,12 @@
-package com.github.greengerong;
+package com.github.greengerong.collection;
 
 
+import com.github.greengerong.model.People;
+import com.github.greengerong.model.Student;
+import com.github.greengerong.model.Teacher;
 import com.google.common.base.Function;
 import com.google.common.base.Predicate;
 import com.google.common.collect.ImmutableList;
-import com.google.common.collect.Iterables;
-import com.google.common.collect.Lists;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -15,7 +16,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 
-import static com.github.greengerong.FluentIterable2.from;
+import static com.github.greengerong.collection.FluentIterable2.from;
 import static com.google.common.collect.Lists.newArrayList;
 import static java.lang.Integer.valueOf;
 import static org.hamcrest.CoreMatchers.is;

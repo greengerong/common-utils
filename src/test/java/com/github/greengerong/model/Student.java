@@ -1,6 +1,4 @@
-package com.github.greengerong;
-
-import java.util.Iterator;
+package com.github.greengerong.model;
 
 
 public class Student extends People {

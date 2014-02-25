@@ -1,4 +1,4 @@
-package com.github.greengerong;
+package com.github.greengerong.collection;
 
 
 import com.google.common.base.Function;
