@@ -38,7 +38,7 @@ public class FluentIterable2Test {
     }
 
     @Test
-    public void shouldSelectByCondition() throws Exception {
+    public void should_select_by_condition() throws Exception {
         final List<Integer> mapLists = from(dataLists).select(new Function<Integer, Integer>() {
             @Override
             public Integer apply(Integer input) {
@@ -52,7 +52,7 @@ public class FluentIterable2Test {
     }
 
     @Test
-    public void shouldWhereByCondition() throws Exception {
+    public void should_where_by_condition() throws Exception {
         final List<Integer> mapLists = from(dataLists).where(new Predicate<Integer>() {
             @Override
             public boolean apply(Integer input) {
@@ -68,7 +68,7 @@ public class FluentIterable2Test {
     }
 
     @Test
-    public void shouldCastAllElement() throws Exception {
+    public void should_cast_all_element() throws Exception {
         final FluentIterable2<Student> students = from(peoples).cast();
 
         assertThat(students.size(), is(4));
@@ -76,7 +76,7 @@ public class FluentIterable2Test {
     }
 
     @Test
-    public void shouldForEach() throws Exception {
+    public void should_for_each() throws Exception {
 
         final List<Integer> lists = newArrayList();
         from(dataLists).forEach(new Action<Integer>() {
@@ -94,7 +94,7 @@ public class FluentIterable2Test {
     }
 
     @Test
-    public void shouldToMap() throws Exception {
+    public void should_to_map() throws Exception {
         final Map<Integer, String> map = from(peoples).toMap(
                 new Function<People, Integer>() {
                     @Override
@@ -114,7 +114,7 @@ public class FluentIterable2Test {
     }
 
     @Test
-    public void shouldDistinct() throws Exception {
+    public void should_distinct() throws Exception {
         final FluentIterable2<Integer> distinct = from(dataLists).distinct();
         //1, 2, 3, 4, 9, 6, 3, 8, 9
         assertThat(distinct.size(), is(7));
@@ -128,7 +128,7 @@ public class FluentIterable2Test {
     }
 
     @Test
-    public void shouldDistinctByEqualFunction() throws Exception {
+    public void should_distinct_by_equal_function() throws Exception {
         final FluentIterable2<People> distinct = from(peoples).distinct(new Comparator<People>() {
             @Override
             public int compare(People e, People e2) {
@@ -143,7 +143,7 @@ public class FluentIterable2Test {
     }
 
     @Test
-    public void shouldDistinctByPropertyFunction() throws Exception {
+    public void should_distinct_by_property_function() throws Exception {
         final FluentIterable2<People> distinct = from(peoples).distinct(new Function<People, Object>() {
             @Override
             public Object apply(People input) {
@@ -158,7 +158,7 @@ public class FluentIterable2Test {
     }
 
     @Test
-    public void shouldGetDefaultWhenFirstIsEmpty() throws Exception {
+    public void should_get_default_when_first_is_empty() throws Exception {
         final List<Integer> iterable = newArrayList();
         final Integer val = from(iterable).firstOrDefault(1);
 
@@ -167,7 +167,7 @@ public class FluentIterable2Test {
     }
 
     @Test
-    public void shouldSaflyCast() throws Exception {
+    public void should_safly_cast() throws Exception {
         peoples.add(new Teacher(1, "teacher 1"));
 
         final FluentIterable2<Teacher> teachers = from(peoples).ofType(Teacher.class);
@@ -177,7 +177,7 @@ public class FluentIterable2Test {
     }
 
     @Test
-    public void shouldGroupBy() throws Exception {
+    public void should_group_by() throws Exception {
         final List<Group<String, Integer>> group = from(dataLists).groupBy(new Function<Integer, String>() {
             @Override
             public String apply(Integer input) {
@@ -193,7 +193,7 @@ public class FluentIterable2Test {
     }
 
     @Test
-    public void shouldSortById() throws Exception {
+    public void should_sort_by_id() throws Exception {
         final ImmutableList<People> list = from(peoples).orderBy(new Comparator<People>() {
             @Override
             public int compare(People people, People people2) {
@@ -213,7 +213,7 @@ public class FluentIterable2Test {
     }
 
     @Test
-    public void shouldSortByProperty() throws Exception {
+    public void should_sort_by_property() throws Exception {
         final ImmutableList<People> list = from(peoples).orderBy(new Function<People, Object>() {
             @Override
             public Object apply(People input) {
@@ -233,7 +233,7 @@ public class FluentIterable2Test {
     }
 
     @Test
-    public void shouldOrderByDefault() throws Exception {
+    public void should_order_by_default() throws Exception {
         final List<Integer> lists = from(dataLists).orderBy().toList();
 
         //(1, 2, 3, 4, 9, 6, 3, 8, 9);
@@ -260,7 +260,7 @@ public class FluentIterable2Test {
     }
 
     @Test
-    public void shouldSkipWhereGot8() throws Exception {
+    public void should_skip_where_get_8() throws Exception {
         final FluentIterable2<Integer> lists = from(dataLists).skipWhere(new Predicate<Integer>() {
             @Override
             public boolean apply(Integer input) {
@@ -274,7 +274,7 @@ public class FluentIterable2Test {
     }
 
     @Test
-    public void shouldSumAllTheValue() throws Exception {
+    public void should_sum_all_the_value() throws Exception {
         final Integer sum = from(dataLists).aggregate(0, new Function2<Integer>() {
             @Override
             public Integer apply(Integer input1, Integer input2) {
@@ -285,7 +285,7 @@ public class FluentIterable2Test {
     }
 
     @Test
-    public void shouldSumAllTheValueByType() throws Exception {
+    public void should_sum_all_the_value_by_type() throws Exception {
         final Integer sum = from(dataLists).aggregate(int.class, new Function2<Integer>() {
             @Override
             public Integer apply(Integer input1, Integer input2) {
@@ -296,14 +296,14 @@ public class FluentIterable2Test {
     }
 
     @Test
-    public void shouldTake3() throws Exception {
+    public void should_take_3() throws Exception {
         final ImmutableList<Integer> list = from(dataLists).take(3).toList();
 
         assertThat(list.toString(), is("[1, 2, 3]"));
     }
 
     @Test
-    public void shouldTakeWhereMode3() throws Exception {
+    public void should_take_where_mode_3() throws Exception {
         final FluentIterable2<Integer> list = from(dataLists).takeWhere(new Predicate<Integer>() {
             @Override
             public boolean apply(Integer input) {
@@ -316,7 +316,7 @@ public class FluentIterable2Test {
     }
 
     @Test
-    public void shouldZip() throws Exception {
+    public void should_zip() throws Exception {
         final List<Integer> first = newArrayList(1, 2, 3);
         final List<Integer> second = newArrayList(1, 2);
         final ImmutableList<Integer> list = from(first).zip(second, new Function3<Integer, Integer, Integer>() {
@@ -330,7 +330,7 @@ public class FluentIterable2Test {
     }
 
     @Test
-    public void shouldFlattenList() throws Exception {
+    public void should_flatten_list() throws Exception {
         final List<Serializable> first = newArrayList(valueOf(1), valueOf(2), newArrayList(valueOf(1), valueOf(2), valueOf(3), newArrayList(8, 9, newArrayList(10, 9))));
         final ImmutableList<Serializable> list = from(first).flatten().toList();
         assertThat(list.toString(), is("[1, 2, 1, 2, 3, 8, 9, 10, 9]"));
