@@ -9,6 +9,8 @@ import com.google.common.collect.Lists;
 
 import java.util.List;
 
+import static com.github.greengerong.checker.Assert.checkArgument;
+import static com.github.greengerong.checker.Assert.checkNotNull;
 import static com.google.common.collect.FluentIterable.from;
 
 public class When {
@@ -19,6 +21,9 @@ public class When {
     }
 
     public <T, E> When then(final Predicate<T> predicate, final Function<T, E> function) {
+        checkNotNull(predicate, "Predicate should be not null.");
+        checkNotNull(function, "Function should be not null.");
+
         this.conditions.add(new WhenGroup(predicate, function));
         return this;
     }
