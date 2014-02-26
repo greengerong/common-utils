@@ -20,7 +20,7 @@ public class WhenTest {
         final String name = new When()
                 .then(getOddPredicate(), getOddFunction())
                 .then(getEvenPredicate(), getEvenFunction())
-                .done(people, String.class);
+                .single(people);
 
 
         assertThat(name, is("me-me"));
@@ -32,7 +32,7 @@ public class WhenTest {
         People people = new People(1, "me");
         final String name = new When()
                 .then(getEvenPredicate(), getEvenFunction())
-                .done(people, String.class);
+                .single(people);
 
 
         assertThat(name, is(nullValue()));
@@ -45,24 +45,12 @@ public class WhenTest {
         final List<String> name = new When()
                 .then(getOddPredicate(), getOddFunction())
                 .then(getDefaultPredicate(), getDefaultFunction())
-                .done(people, String.class, false);
+                .all(people);
 
 
+        assertThat(name.size(), is(2));
         assertThat(name.get(0), is("me-me"));
         assertThat(name.get(1), is("me-me-default"));
-
-    }
-
-    @Test
-    public void should_handle_by_first_matched_hanlder_with_first_parameter_true() throws Exception {
-        People people = new People(1, "me");
-        final List<String> name = new When()
-                .then(getOddPredicate(), getOddFunction())
-                .then(getDefaultPredicate(), getDefaultFunction())
-                .done(people, String.class, true);
-
-
-        assertThat(name.get(0), is("me-me"));
 
     }
 
