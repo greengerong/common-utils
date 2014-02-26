@@ -7,6 +7,7 @@ import org.w3c.dom.NodeList;
 import javax.xml.parsers.DocumentBuilderFactory;
 import java.io.InputStream;
 
+import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 
@@ -23,7 +24,7 @@ public class XmlUtilsTest {
         final String xml = XmlUtils.toXml(node.item(0));
 
         //then
-        assertThat(xml.trim().indexOf("GetOrdersHistoryResponse") > 0, is(true));
+        assertThat(xml, is(containsString("<GetOrdersHistoryResponse>")));
     }
 }
 
