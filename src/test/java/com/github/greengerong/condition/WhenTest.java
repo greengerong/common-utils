@@ -8,6 +8,7 @@ import org.junit.Test;
 
 import java.util.List;
 
+import static com.github.greengerong.condition.expression.WhenExpression.anything;
 import static org.hamcrest.Matchers.nullValue;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
@@ -44,7 +45,7 @@ public class WhenTest {
         People people = new People(1, "me");
         final List<String> name = new When()
                 .then(getOddPredicate(), getOddFunction())
-                .then(getDefaultPredicate(), getDefaultFunction())
+                .then(anything(), getDefaultFunction())
                 .all(people);
 
 
@@ -54,14 +55,43 @@ public class WhenTest {
 
     }
 
-    public Predicate<People> getDefaultPredicate() {
-        return new Predicate<People>() {
-            @Override
-            public boolean apply(People input) {
-                return true;
-            }
-        };
+    @Test
+    public void should_handle_by_first_hanlder_not_otherwise() throws Exception {
+        People people = new People(1, "me");
+        final List<String> name = new When()
+                .then(getOddPredicate(), getOddFunction())
+                .otherwise(getDefaultFunction())
+                .all(people);
 
+
+        assertThat(name.size(), is(1));
+        assertThat(name.get(0), is("me-me"));
+
+    }
+
+    @Test
+    public void should_handle_by_otherwise_for_single() throws Exception {
+        People people = new People(1, "me");
+        final String name = new When()
+                .then(getEvenPredicate(), getEvenFunction())
+                .otherwise(getDefaultFunction())
+                .single(people);
+
+
+        assertThat(name, is("me-me-default"));
+    }
+
+    @Test
+    public void should_handle_by_otherwise_for_all() throws Exception {
+        People people = new People(1, "me");
+        final List<String> names = new When()
+                .then(getEvenPredicate(), getEvenFunction())
+                .otherwise(getDefaultFunction())
+                .all(people);
+
+
+        assertThat(names.size(), is(1));
+        assertThat(names.get(0), is("me-me-default"));
     }
 
     private Function<People, String> getDefaultFunction() {

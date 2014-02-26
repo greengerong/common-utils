@@ -14,25 +14,25 @@ public class WhenDone {
     private final List<WhenGroup> conditions;
     private final Function otherwiseFunction;
 
-    private WhenDone(List<WhenGroup> conditions, Function otherwiseFunction) {
+    private WhenDone(final List<WhenGroup> conditions, final Function otherwiseFunction) {
 
         this.conditions = conditions;
         this.otherwiseFunction = otherwiseFunction;
     }
 
-    private WhenDone(List<WhenGroup> conditions) {
+    private WhenDone(final List<WhenGroup> conditions) {
         this(conditions, null);
     }
 
-    static WhenDone create(List<WhenGroup> conditions, Function otherwiseFunction) {
+    static WhenDone create(final List<WhenGroup> conditions, final Function otherwiseFunction) {
         return new WhenDone(conditions, otherwiseFunction);
     }
 
-    static WhenDone create(List<WhenGroup> conditions) {
+    static WhenDone create(final List<WhenGroup> conditions) {
         return new WhenDone(conditions);
     }
 
-    public <T, E> E single(T instance) {
+    public <T, E> E single(final T instance) {
         final Optional<WhenGroup> results = from(conditions).firstMatch(IsMatchCondition(instance));
         if (!results.isPresent() && otherwiseFunction != null) {
             return (E) execOtherwise(otherwiseFunction, instance);
@@ -58,7 +58,7 @@ public class WhenDone {
         return results;
     }
 
-    private Object execOtherwise(Function otherwiseFunction, Object instance) {
+    private Object execOtherwise(final Function otherwiseFunction, final Object instance) {
         return otherwiseFunction.apply(instance);
     }
 
