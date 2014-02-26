@@ -1,5 +1,7 @@
 package com.github.greengerong.condition.expression;
 
+import com.github.greengerong.collection.Function2;
+import com.google.common.base.Function;
 import com.google.common.base.Predicate;
 
 public class WhenExpression {
@@ -30,5 +32,13 @@ public class WhenExpression {
         return new InstanceOfExpression(obj);
     }
 
+    public static <T> Function returnWith(final T obj) {
+        return new Function() {
+            @Override
+            public T apply(Object input) {
+                return obj;
+            }
+        };
+    }
 
 }
