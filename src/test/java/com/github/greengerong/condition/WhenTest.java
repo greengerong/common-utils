@@ -32,7 +32,6 @@ public class WhenTest {
                 .single(1);
 
         assertThat(sex, is(nullValue()));
-
     }
 
     @Test
@@ -42,7 +41,6 @@ public class WhenTest {
                 .then(eq(2), returnWith(Sex.FEMALE))
                 .then(anything(), returnWith(Sex.MALE))
                 .all(1);
-
 
         assertThat(sexes.size(), is(2));
         assertThat(sexes.get(0), is(Sex.MALE));
