@@ -1,13 +1,13 @@
-package com.github.greengerong.condition.expression;
+package com.github.greengerong.condition.expression.predicate;
 
 import com.google.common.base.Predicate;
 
 import static com.github.greengerong.checker.Assert.checkNotNull;
 
-public class InstanceOfExpression<T> implements Predicate<T> {
+public class InstanceOfPredicateExpression<T> implements Predicate<T> {
     private T expectedClass;
 
-    public InstanceOfExpression(T expectedClass) {
+    public InstanceOfPredicateExpression(T expectedClass) {
         this.expectedClass = expectedClass;
     }
 

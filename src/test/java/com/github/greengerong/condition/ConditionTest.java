@@ -1,13 +1,14 @@
 package com.github.greengerong.condition;
 
 
+import com.github.greengerong.condition.expression.WhenFunctionExpression;
 import com.github.greengerong.model.Sex;
 import org.junit.Test;
 
 import java.util.List;
 
 import static com.github.greengerong.condition.Condition.when;
-import static com.github.greengerong.condition.expression.WhenExpression.*;
+import static com.github.greengerong.condition.expression.WhenPredicateExpression.*;
 import static org.hamcrest.Matchers.nullValue;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
@@ -20,8 +21,8 @@ public class ConditionTest {
 
         //when
         final Sex sex = when()
-                .then(eq(1), returnWith(Sex.MALE))
-                .then(eq(2), returnWith(Sex.FEMALE))
+                .then(eq(1), WhenFunctionExpression.returnWith(Sex.MALE))
+                .then(eq(2), WhenFunctionExpression.returnWith(Sex.FEMALE))
                 .single(1);
 
 
@@ -35,7 +36,7 @@ public class ConditionTest {
 
         //when
         final Sex sex = when()
-                .then(eq(2), returnWith(Sex.FEMALE))
+                .then(eq(2), WhenFunctionExpression.returnWith(Sex.FEMALE))
                 .single(1);
 
         //then
@@ -48,9 +49,9 @@ public class ConditionTest {
 
         //when
         final List<Sex> sexes = when()
-                .then(eq(1), returnWith(Sex.MALE))
-                .then(eq(2), returnWith(Sex.FEMALE))
-                .then(anything(), returnWith(Sex.MALE))
+                .then(eq(1), WhenFunctionExpression.returnWith(Sex.MALE))
+                .then(eq(2), WhenFunctionExpression.returnWith(Sex.FEMALE))
+                .then(anything(), WhenFunctionExpression.returnWith(Sex.MALE))
                 .all(1);
 
         //then
@@ -65,9 +66,9 @@ public class ConditionTest {
 
         //when
         final List<Sex> sexes = when()
-                .then(eq(1), returnWith(Sex.MALE))
-                .then(eq(2), returnWith(Sex.FEMALE))
-                .otherwise(returnWith(Sex.MALE))
+                .then(eq(1), WhenFunctionExpression.returnWith(Sex.MALE))
+                .then(eq(2), WhenFunctionExpression.returnWith(Sex.FEMALE))
+                .otherwise(WhenFunctionExpression.returnWith(Sex.MALE))
                 .all(2);
 
         //then
@@ -81,9 +82,9 @@ public class ConditionTest {
 
         //when
         final Sex sex = when()
-                .then(eq(1), returnWith(Sex.MALE))
-                .then(eq(2), returnWith(Sex.MALE))
-                .otherwise(returnWith(Sex.FEMALE))
+                .then(eq(1), WhenFunctionExpression.returnWith(Sex.MALE))
+                .then(eq(2), WhenFunctionExpression.returnWith(Sex.MALE))
+                .otherwise(WhenFunctionExpression.returnWith(Sex.FEMALE))
                 .single(3);
 
         //then
@@ -96,9 +97,9 @@ public class ConditionTest {
 
         //when
         final List<Sex> sexes = when()
-                .then(eq(1), returnWith(Sex.MALE))
-                .then(eq(2), returnWith(Sex.MALE))
-                .otherwise(returnWith(Sex.FEMALE))
+                .then(eq(1), WhenFunctionExpression.returnWith(Sex.MALE))
+                .then(eq(2), WhenFunctionExpression.returnWith(Sex.MALE))
+                .otherwise(WhenFunctionExpression.returnWith(Sex.FEMALE))
                 .all(3);
 
         //then

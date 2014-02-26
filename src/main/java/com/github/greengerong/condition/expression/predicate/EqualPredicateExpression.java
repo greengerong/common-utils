@@ -1,13 +1,13 @@
-package com.github.greengerong.condition.expression;
+package com.github.greengerong.condition.expression.predicate;
 
 import com.google.common.base.Predicate;
 
 import java.lang.reflect.Array;
 
-public class EqualExpression<T> implements Predicate<T> {
+public class EqualPredicateExpression<T> implements Predicate<T> {
     private T expected;
 
-    public EqualExpression(T expected) {
+    public EqualPredicateExpression(T expected) {
         this.expected = expected;
     }
 
