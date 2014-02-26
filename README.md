@@ -10,5 +10,5 @@
 
 *   [checker](https://github.com/greengerong/common-utils/blob/master/doc/checker.md)
 
-*   [when](https://github.com/greengerong/common-utils/blob/master/doc/when.md)
+*   [condition](https://github.com/greengerong/common-utils/blob/master/doc/condition.md)
 

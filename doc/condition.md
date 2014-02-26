@@ -1,6 +1,8 @@
 
-### Checker
+### Condition
 ===========================
+
+### when
 
 * final T single = when().then(eq(xx), returnWith(xx)).then(eq(xx), returnWith(xx)).single(seed);
 
