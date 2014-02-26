@@ -9,14 +9,18 @@ import java.util.List;
 
 import static com.github.greengerong.checker.Assert.checkNotNull;
 
-public class When {
+public class Condition {
 
     private List<WhenGroup> conditions = Lists.newArrayList();
 
-    public When() {
+    private Condition() {
     }
 
-    public <T, E> When then(final Predicate<T> predicate, final Function<T, E> function) {
+    public static Condition when() {
+        return new Condition();
+    }
+
+    public <T, E> Condition then(final Predicate<T> predicate, final Function<T, E> function) {
         checkNotNull(predicate, "Predicate should be not null.");
         checkNotNull(function, "Function should be not null.");
         this.conditions.add(new WhenGroup(predicate, function));
