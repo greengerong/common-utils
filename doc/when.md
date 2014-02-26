@@ -2,10 +2,10 @@
 ### Checker
 ===========================
 
-* final Object single1 = new When().then(null, null).then(null, null).single(null);
+* final T single = when().then(eq(xx), returnWith(xx)).then(eq(xx), returnWith(xx)).single(seed);
 
-* final List<Object> all1 = new When().then(null, null).then(null, null).all(null);
+* final List<T> all = when().then(eq(xx), returnWith(xx)).then(eq(xx), returnWith(xx)).all(seed);
 
-* final Object single = new When().then(null, null).then(null, null).otherwise(null).single(null);
+* final T single = when().then(eq(xx), returnWith(xx)).then(eq(xx), returnWith(xx)).otherwise(xx).single(seed);
 
-* final List<Object> all = new When().then(null, null).then(null, null).otherwise(null).all(null);
+* final List<T> all = when().then(eq(xx), returnWith(xx)).then(eq(xx), returnWith(xx)).otherwise(xx).all(seed);
