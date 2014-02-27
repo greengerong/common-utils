@@ -1,7 +1,6 @@
 package com.github.greengerong.condition;
 
 
-import com.github.greengerong.condition.expression.WhenFunctionExpression;
 import com.github.greengerong.model.Sex;
 import org.junit.Test;
 
@@ -9,7 +8,7 @@ import java.util.List;
 
 import static com.github.greengerong.condition.Condition.when;
 import static com.github.greengerong.condition.expression.WhenFunctionExpression.returnWith;
-import static com.github.greengerong.condition.expression.WhenPredicateExpression.*;
+import static com.github.greengerong.condition.expression.WhenPredicateExpression.anything;
 import static com.google.common.base.Predicates.equalTo;
 import static org.hamcrest.Matchers.nullValue;
 import static org.hamcrest.core.Is.is;
