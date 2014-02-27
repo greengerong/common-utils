@@ -1,4 +1,4 @@
-package com.github.greengerong.condition;
+package com.github.greengerong.condition.function;
 
 import com.google.common.base.Function;
 import com.google.common.base.Optional;
@@ -9,31 +9,31 @@ import java.util.List;
 
 import static com.google.common.collect.FluentIterable.from;
 
-public class WhenDone {
+public class WhenFunctionDone {
 
-    private final List<WhenGroup> conditions;
+    private final List<WhenFunctionGroup> conditions;
     private final Function otherwiseFunction;
 
-    private WhenDone(final List<WhenGroup> conditions, final Function otherwiseFunction) {
+    private WhenFunctionDone(final List<WhenFunctionGroup> conditions, final Function otherwiseFunction) {
 
         this.conditions = conditions;
         this.otherwiseFunction = otherwiseFunction;
     }
 
-    private WhenDone(final List<WhenGroup> conditions) {
+    private WhenFunctionDone(final List<WhenFunctionGroup> conditions) {
         this(conditions, null);
     }
 
-    static WhenDone create(final List<WhenGroup> conditions, final Function otherwiseFunction) {
-        return new WhenDone(conditions, otherwiseFunction);
+    static WhenFunctionDone create(final List<WhenFunctionGroup> conditions, final Function otherwiseFunction) {
+        return new WhenFunctionDone(conditions, otherwiseFunction);
     }
 
-    static WhenDone create(final List<WhenGroup> conditions) {
-        return new WhenDone(conditions);
+    static WhenFunctionDone create(final List<WhenFunctionGroup> conditions) {
+        return new WhenFunctionDone(conditions);
     }
 
     public <T, E> E single(final T instance) {
-        final Optional<WhenGroup> results = from(conditions).firstMatch(IsMatchCondition(instance));
+        final Optional<WhenFunctionGroup> results = from(conditions).firstMatch(IsMatchCondition(instance));
         if (!results.isPresent() && otherwiseFunction != null) {
             return (E) execOtherwise(otherwiseFunction, instance);
         }
@@ -43,9 +43,9 @@ public class WhenDone {
     public <T, E> List<E> all(final T instance) {
         final List<E> results = from(conditions)
                 .filter(IsMatchCondition(instance))
-                .transform(new Function<WhenGroup, E>() {
+                .transform(new Function<WhenFunctionGroup, E>() {
                     @Override
-                    public E apply(WhenGroup input) {
+                    public E apply(WhenFunctionGroup input) {
                         return (E) input.exec(instance);
                     }
 
@@ -62,10 +62,10 @@ public class WhenDone {
         return otherwiseFunction.apply(instance);
     }
 
-    private <T> Predicate<WhenGroup> IsMatchCondition(final T instance) {
-        return new Predicate<WhenGroup>() {
+    private <T> Predicate<WhenFunctionGroup> IsMatchCondition(final T instance) {
+        return new Predicate<WhenFunctionGroup>() {
             @Override
-            public boolean apply(WhenGroup input) {
+            public boolean apply(WhenFunctionGroup input) {
                 return input.getPredicate().apply(instance);
             }
         };

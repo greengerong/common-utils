@@ -1,14 +1,14 @@
-package com.github.greengerong.condition;
+package com.github.greengerong.condition.function;
 
 import com.google.common.base.Function;
 import com.google.common.base.Predicate;
 
-class WhenGroup {
+class WhenFunctionGroup {
 
     private Predicate predicate;
     private Function function;
 
-    public WhenGroup(Predicate predicate, Function function) {
+    public WhenFunctionGroup(Predicate predicate, Function function) {
 
         this.predicate = predicate;
         this.function = function;

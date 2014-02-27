@@ -6,7 +6,7 @@ import org.junit.Test;
 
 import java.util.List;
 
-import static com.github.greengerong.condition.Condition.when;
+import static com.github.greengerong.condition.WhenFactory.when;
 import static com.github.greengerong.condition.expression.WhenFunctionExpression.returnWith;
 import static com.github.greengerong.condition.expression.WhenPredicateExpression.anything;
 import static com.google.common.base.Predicates.equalTo;
@@ -14,7 +14,7 @@ import static org.hamcrest.Matchers.nullValue;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 
-public class ConditionTest {
+public class WhenFunctionTest {
 
     @Test
     public void should_handle_by_first_matched_hanlder() throws Exception {
