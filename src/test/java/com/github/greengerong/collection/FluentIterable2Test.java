@@ -56,7 +56,6 @@ public class FluentIterable2Test {
     }
 
     @Test
-
     public void should_where_by_condition() throws Exception {
         //given
 

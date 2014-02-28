@@ -3,9 +3,19 @@ package com.github.greengerong.collection;
 
 import com.google.common.base.Function;
 import com.google.common.base.Predicate;
-import com.google.common.collect.*;
+import com.google.common.collect.FluentIterable;
+import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 
-import java.util.*;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.LinkedHashSet;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.TreeSet;
 
 import static com.google.common.base.Defaults.defaultValue;
 import static com.google.common.base.Preconditions.checkNotNull;
@@ -50,11 +60,14 @@ public class FluentIterable2<E> extends FluentIterable<E> {
         });
     }
 
-    public void forEach(Action<E> action) {
-        final Iterator<E> iterator = iterator();
-        while (iterator.hasNext()) {
-            action.apply(iterator.next());
-        }
+    public void forEach(final Action<E> action) {
+        transform(new Function<E, Boolean>() {
+            @Override
+            public Boolean apply(E input) {
+                action.apply(input);
+                return true;
+            }
+        }).toList();
     }
 
     public <K, V> Map<K, V> toMap(final Function<? super E, K> keyFunction, final Function<? super E, V> valueFunction) {
@@ -203,7 +216,7 @@ public class FluentIterable2<E> extends FluentIterable<E> {
     public FluentIterable2<E> takeWhere(Predicate<E> predicate) {
         final List<E> list = Lists.newArrayList();
         final Iterator<E> iterator = iterator();
-        E d = null;
+        E d;
         while (iterator.hasNext() && !predicate.apply(d = iterator.next())) {
             list.add(d);
         }
