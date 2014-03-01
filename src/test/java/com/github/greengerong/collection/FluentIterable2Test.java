@@ -337,7 +337,7 @@ public class FluentIterable2Test {
 
     @Test
     public void should_sum_all_the_value() throws Exception {
-        final Integer sum = from(dataLists).aggregate(0, new Function2<Integer>() {
+        final Integer sum = from(dataLists).aggregate(0, new AggregateFunction2<Integer, Integer>() {
             @Override
             public Integer apply(Integer input1, Integer input2) {
                 return input1 + input2;
@@ -353,7 +353,7 @@ public class FluentIterable2Test {
         //given
 
         //when
-        final Integer sum = from(dataLists).aggregate(int.class, new Function2<Integer>() {
+        final Integer sum = from(dataLists).aggregate(int.class, new AggregateFunction2<Integer, Integer>() {
             @Override
             public Integer apply(Integer input1, Integer input2) {
                 return input1 + input2;
@@ -396,7 +396,7 @@ public class FluentIterable2Test {
         //when
         final List<Integer> first = newArrayList(1, 2, 3);
         final List<Integer> second = newArrayList(1, 2);
-        final ImmutableList<Integer> list = from(first).zip(second, new Function3<Integer, Integer, Integer>() {
+        final ImmutableList<Integer> list = from(first).zip(second, new ZipFunction<Integer, Integer, Integer>() {
             @Override
             public Integer apply(Integer input1, Integer input2) {
                 return input1 * input2;

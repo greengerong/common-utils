@@ -70,38 +70,40 @@ public class FluentIterable2<E> extends FluentIterable<E> {
         }).toList();
     }
 
-    public <K, V> Map<K, V> toMap(final Function<? super E, K> keyFunction, final Function<? super E, V> valueFunction) {
-        final HashMap<K, V> kvHashMap = new HashMap<K, V>();
-        forEach(new Action<E>() {
+    public <K, V> Map<K, V> toMap(final Function<? super E, K> keyFunction,
+                                  final Function<? super E, V> valueFunction) {
+        return aggregate(new HashMap<K, V>(), new AggregateFunction2<E, Map<K, V>>() {
             @Override
-            public void apply(E input) {
-                kvHashMap.put(keyFunction.apply(input), valueFunction.apply(input));
+            public Map<K, V> apply(Map<K, V> map, E input) {
+                map.put(keyFunction.apply(input), valueFunction.apply(input));
+                return map;
             }
         });
-
-        return kvHashMap;
     }
 
     public FluentIterable2<E> distinct() {
-        final Set<E> set = new LinkedHashSet<E>();
-        forEach(new Action<E>() {
-            @Override
-            public void apply(E input) {
-                set.add(input);
-            }
-        });
+
+        final Set<E> set = aggregate(new LinkedHashSet<E>(),
+                new AggregateFunction2<E, Set<E>>() {
+                    @Override
+                    public Set<E> apply(Set<E> set, E input) {
+                        set.add(input);
+                        return set;
+                    }
+                });
         return new FluentIterable2<E>(set);
     }
 
 
     public FluentIterable2<E> distinct(Comparator<E> comparator) {
-        final Set<E> set = new TreeSet<E>(comparator);
-        forEach(new Action<E>() {
-            @Override
-            public void apply(E input) {
-                set.add(input);
-            }
-        });
+        final Set<E> set = aggregate(new TreeSet<E>(comparator),
+                new AggregateFunction2<E, Set<E>>() {
+                    @Override
+                    public Set<E> apply(Set<E> set, E input) {
+                        set.add(input);
+                        return set;
+                    }
+                });
         return new FluentIterable2<E>(set);
     }
 
@@ -135,16 +137,17 @@ public class FluentIterable2<E> extends FluentIterable<E> {
     }
 
     public <T> FluentIterable<Group<T, E>> groupBy(final Function<E, T> function) {
-        final HashMap<T, List<E>> group = Maps.newHashMap();
-        forEach(new Action<E>() {
+        final Map<T, List<E>> group = Maps.newHashMap();
+        aggregate(group, new AggregateFunction2<E, Map<T, List<E>>>() {
             @Override
-            public void apply(E input) {
+            public Map<T, List<E>> apply(Map<T, List<E>> group, E input) {
                 final T key = function.apply(input);
                 if (group.containsKey(key)) {
                     group.get(key).add(input);
                 } else {
                     group.put(key, Lists.newArrayList(input));
                 }
+                return group;
             }
         });
 
@@ -195,13 +198,13 @@ public class FluentIterable2<E> extends FluentIterable<E> {
     }
 
 
-    public E aggregate(final Class<E> type, final Function2<E> function) {
+    public <T> T aggregate(final Class<T> type, final AggregateFunction2<E, T> function) {
         return aggregate(defaultValue(type), function);
     }
 
-    public E aggregate(final E first, final Function2<E> function) {
+    public <T> T aggregate(final T first, final AggregateFunction2<E, T> function) {
         final Iterator<E> iterator = this.iterator();
-        E lastValue = first;
+        T lastValue = first;
         while (iterator.hasNext()) {
             final E next = iterator.next();
             lastValue = function.apply(lastValue, next);
@@ -223,7 +226,7 @@ public class FluentIterable2<E> extends FluentIterable<E> {
         return new FluentIterable2<E>(list);
     }
 
-    public <T, R> FluentIterable2<R> zip(final Iterable<T> secondIterable, final Function3<E, T, R> function) {
+    public <T, R> FluentIterable2<R> zip(final Iterable<T> secondIterable, final ZipFunction<E, T, R> function) {
         checkNotNull(secondIterable);
         final List<E> first = Lists.newArrayList(iterable);
         final List<T> second = Lists.newArrayList(secondIterable);
