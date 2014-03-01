@@ -154,7 +154,7 @@ public class FluentIterable2Test {
     public void should_distinct_by_equal_function() throws Exception {
         //given
 
-        //when
+        //condition
         final FluentIterable2<People> distinct = from(peoples).distinct(new Comparator<People>() {
             @Override
             public int compare(People e, People e2) {
@@ -337,7 +337,7 @@ public class FluentIterable2Test {
 
     @Test
     public void should_sum_all_the_value() throws Exception {
-        final Integer sum = from(dataLists).aggregate(0, new AggregateFunction2<Integer, Integer>() {
+        final Integer sum = from(dataLists).aggregate(0, new AggregateFunction<Integer, Integer>() {
             @Override
             public Integer apply(Integer input1, Integer input2) {
                 return input1 + input2;
@@ -353,7 +353,7 @@ public class FluentIterable2Test {
         //given
 
         //when
-        final Integer sum = from(dataLists).aggregate(int.class, new AggregateFunction2<Integer, Integer>() {
+        final Integer sum = from(dataLists).aggregate(int.class, new AggregateFunction<Integer, Integer>() {
             @Override
             public Integer apply(Integer input1, Integer input2) {
                 return input1 + input2;

@@ -32,7 +32,7 @@ public class WhenFunctionDone {
         return new WhenFunctionDone(conditions);
     }
 
-    public <T, E> E single(final T instance) {
+    public <T, E> E first(final T instance) {
         final Optional<WhenFunctionGroup> results = from(conditions).firstMatch(IsMatchCondition(instance));
         if (!results.isPresent() && otherwiseFunction != null) {
             return (E) execOtherwise(otherwiseFunction, instance);
@@ -40,7 +40,7 @@ public class WhenFunctionDone {
         return results.isPresent() ? (E) results.get().exec(instance) : null;
     }
 
-    public <T, E> List<E> all(final T instance) {
+    public <T, E> List<E> pipe(final T instance) {
         final List<E> results = from(conditions)
                 .filter(IsMatchCondition(instance))
                 .transform(new Function<WhenFunctionGroup, E>() {

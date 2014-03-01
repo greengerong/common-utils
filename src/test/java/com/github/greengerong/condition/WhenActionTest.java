@@ -8,7 +8,7 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import static com.github.greengerong.condition.WhenFactory.when;
+import static com.github.greengerong.condition.ConditionFactory.condition;
 import static com.google.common.base.Predicates.alwaysTrue;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
@@ -24,14 +24,14 @@ public class WhenActionTest {
         //given
         final StuCache model = new StuCache(Status.NEW);
 
+        //condition
+        condition()
+                .when(outDate(), removeEntity())
+                .when(newOne(), addEntiry())
+                .first(model);
+
+
         //when
-        when()
-                .then(outDate(), removeEntity())
-                .then(newOne(), addEntiry())
-                .single(model);
-
-
-        //then
         verify(mockStubCacheService).add(model);
         verify(mockStubCacheService, never()).remove(model);
         verify(mockStubCacheService, never()).log(model);
@@ -42,12 +42,12 @@ public class WhenActionTest {
         //given
         final StuCache model = new StuCache(Status.OUT_DATE);
 
-        //when
-        when()
-                .then(newOne(), addEntiry())
-                .single(model);
+        //condition
+        condition()
+                .when(newOne(), addEntiry())
+                .first(model);
 
-        //then
+        //when
         verify(mockStubCacheService, never()).add(model);
         verify(mockStubCacheService, never()).remove(model);
         verify(mockStubCacheService, never()).log(model);
@@ -58,14 +58,14 @@ public class WhenActionTest {
         //given
         StuCache model = new StuCache(Status.OUT_DATE);
 
-        //when
-        when()
-                .then(newOne(), addEntiry())
-                .then(outDate(), removeEntity())
-                .then(log(), logEntity())
-                .all(model);
+        //condition
+        condition()
+                .when(newOne(), addEntiry())
+                .when(outDate(), removeEntity())
+                .when(log(), logEntity())
+                .pipe(model);
 
-        //then
+        //when
         verify(mockStubCacheService, never()).add(model);
         verify(mockStubCacheService).remove(model);
         verify(mockStubCacheService).log(model);
@@ -76,14 +76,14 @@ public class WhenActionTest {
         //given
         StuCache model = new StuCache(Status.OUT_DATE);
 
-        //when
-        when()
-                .then(newOne(), addEntiry())
-                .then(outDate(), removeEntity())
+        //condition
+        condition()
+                .when(newOne(), addEntiry())
+                .when(outDate(), removeEntity())
                 .otherwise(logEntity())
-                .all(model);
+                .pipe(model);
 
-        //then
+        //when
         verify(mockStubCacheService, never()).add(model);
         verify(mockStubCacheService).remove(model);
         verify(mockStubCacheService, never()).log(model);
@@ -94,13 +94,13 @@ public class WhenActionTest {
         //given
         StuCache model = new StuCache(Status.OUT_DATE);
 
-        //when
-        when()
-                .then(newOne(), addEntiry())
+        //condition
+        condition()
+                .when(newOne(), addEntiry())
                 .otherwise(logEntity())
-                .single(model);
+                .first(model);
 
-        //then
+        //when
         verify(mockStubCacheService, never()).add(model);
         verify(mockStubCacheService, never()).remove(model);
         verify(mockStubCacheService).log(model);
@@ -111,13 +111,13 @@ public class WhenActionTest {
         //given
         StuCache model = new StuCache(Status.OUT_DATE);
 
-        //when
-        when()
-                .then(newOne(), addEntiry())
+        //condition
+        condition()
+                .when(newOne(), addEntiry())
                 .otherwise(logEntity())
-                .all(model);
+                .pipe(model);
 
-        //then
+        //when
         verify(mockStubCacheService, never()).add(model);
         verify(mockStubCacheService, never()).remove(model);
         verify(mockStubCacheService).log(model);

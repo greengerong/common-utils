@@ -8,18 +8,18 @@ import java.util.List;
 
 import static com.github.greengerong.checker.Assert.checkNotNull;
 
-public class ThenAction {
+public class WhenAction {
 
     private List<WhenActionGroup> conditions = Lists.newArrayList();
 
-    private ThenAction() {
+    private WhenAction() {
     }
 
-    public static ThenAction create() {
-        return new ThenAction();
+    public static WhenAction create() {
+        return new WhenAction();
     }
 
-    public <T> ThenAction then(Predicate<T> predicate, Action<T> action) {
+    public <T> WhenAction when(Predicate<T> predicate, Action<T> action) {
         checkNotNull(predicate, "Predicate should be not null.");
         checkNotNull(action, "Action should be not null.");
         conditions.add(new WhenActionGroup(predicate, action));
@@ -31,11 +31,11 @@ public class ThenAction {
         return WhenActionDone.create(conditions, action);
     }
 
-    public <T> void single(final T instance) {
-        WhenActionDone.create(conditions).single(instance);
+    public <T> void first(final T instance) {
+        WhenActionDone.create(conditions).first(instance);
     }
 
-    public <T> void all(final T instance) {
-        WhenActionDone.create(conditions).all(instance);
+    public <T> void pipe(final T instance) {
+        WhenActionDone.create(conditions).pipe(instance);
     }
 }

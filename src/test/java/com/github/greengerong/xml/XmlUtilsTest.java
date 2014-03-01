@@ -20,10 +20,10 @@ public class XmlUtilsTest {
         final Document doc = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(stream);
         final NodeList node = doc.getElementsByTagName("GetOrdersHistoryResponse");
 
-        //when
+        //condition
         final String xml = XmlUtils.toXml(node.item(0));
 
-        //then
+        //when
         assertThat(xml, is(containsString("<GetOrdersHistoryResponse>")));
     }
 }

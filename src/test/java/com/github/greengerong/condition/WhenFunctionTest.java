@@ -6,7 +6,7 @@ import org.junit.Test;
 
 import java.util.List;
 
-import static com.github.greengerong.condition.WhenFactory.when;
+import static com.github.greengerong.condition.ConditionFactory.condition;
 import static com.github.greengerong.condition.expression.WhenFunctionExpression.returnWith;
 import static com.github.greengerong.condition.expression.WhenPredicateExpression.anything;
 import static com.google.common.base.Predicates.equalTo;
@@ -20,14 +20,14 @@ public class WhenFunctionTest {
     public void should_handle_by_first_matched_hanlder() throws Exception {
         //given
 
-        //when
-        final Sex sex = when()
-                .then(equalTo(1), returnWith(Sex.MALE))
-                .then(equalTo(2), returnWith(Sex.FEMALE))
+        //condition
+        final Sex sex = condition()
+                .when(equalTo(1), returnWith(Sex.MALE))
+                .when(equalTo(2), returnWith(Sex.FEMALE))
                 .single(1);
 
 
-        //then
+        //when
         assertThat(sex, is(Sex.MALE));
     }
 
@@ -35,12 +35,12 @@ public class WhenFunctionTest {
     public void should_return_null_when_no_matched_hanlder() throws Exception {
         //given
 
-        //when
-        final Sex sex = when()
-                .then(equalTo(2), returnWith(Sex.FEMALE))
+        //condition
+        final Sex sex = condition()
+                .when(equalTo(2), returnWith(Sex.FEMALE))
                 .single(1);
 
-        //then
+        //when
         assertThat(sex, is(nullValue()));
     }
 
@@ -48,14 +48,14 @@ public class WhenFunctionTest {
     public void should_handle_by_all_matched_hanlder() throws Exception {
         //given
 
-        //when
-        final List<Sex> sexes = when()
-                .then(equalTo(1), returnWith(Sex.MALE))
-                .then(equalTo(2), returnWith(Sex.FEMALE))
-                .then(anything(), returnWith(Sex.MALE))
+        //condition
+        final List<Sex> sexes = condition()
+                .when(equalTo(1), returnWith(Sex.MALE))
+                .when(equalTo(2), returnWith(Sex.FEMALE))
+                .when(anything(), returnWith(Sex.MALE))
                 .all(1);
 
-        //then
+        //when
         assertThat(sexes.size(), is(2));
         assertThat(sexes.get(0), is(Sex.MALE));
         assertThat(sexes.get(1), is(Sex.MALE));
@@ -65,14 +65,14 @@ public class WhenFunctionTest {
     public void should_handle_by_first_hanlder_not_otherwise() throws Exception {
         //given
 
-        //when
-        final List<Sex> sexes = when()
-                .then(equalTo(1), returnWith(Sex.MALE))
-                .then(equalTo(2), returnWith(Sex.FEMALE))
+        //condition
+        final List<Sex> sexes = condition()
+                .when(equalTo(1), returnWith(Sex.MALE))
+                .when(equalTo(2), returnWith(Sex.FEMALE))
                 .otherwise(returnWith(Sex.MALE))
-                .all(2);
+                .pipe(2);
 
-        //then
+        //when
         assertThat(sexes.size(), is(1));
         assertThat(sexes.get(0), is(Sex.FEMALE));
     }
@@ -81,14 +81,14 @@ public class WhenFunctionTest {
     public void should_handle_by_otherwise_for_single() throws Exception {
         //given
 
-        //when
-        final Sex sex = when()
-                .then(equalTo(1), returnWith(Sex.MALE))
-                .then(equalTo(2), returnWith(Sex.MALE))
+        //condition
+        final Sex sex = condition()
+                .when(equalTo(1), returnWith(Sex.MALE))
+                .when(equalTo(2), returnWith(Sex.MALE))
                 .otherwise(returnWith(Sex.FEMALE))
-                .single(3);
+                .first(3);
 
-        //then
+        //when
         assertThat(sex, is(Sex.FEMALE));
     }
 
@@ -96,14 +96,14 @@ public class WhenFunctionTest {
     public void should_handle_by_otherwise_for_all() throws Exception {
         //given
 
-        //when
-        final List<Sex> sexes = when()
-                .then(equalTo(1), returnWith(Sex.MALE))
-                .then(equalTo(2), returnWith(Sex.MALE))
+        //condition
+        final List<Sex> sexes = condition()
+                .when(equalTo(1), returnWith(Sex.MALE))
+                .when(equalTo(2), returnWith(Sex.MALE))
                 .otherwise(returnWith(Sex.FEMALE))
-                .all(3);
+                .pipe(3);
 
-        //then
+        //when
         assertThat(sexes.size(), is(1));
         assertThat(sexes.get(0), is(Sex.FEMALE));
     }

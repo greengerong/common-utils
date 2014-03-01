@@ -72,7 +72,7 @@ public class FluentIterable2<E> extends FluentIterable<E> {
 
     public <K, V> Map<K, V> toMap(final Function<? super E, K> keyFunction,
                                   final Function<? super E, V> valueFunction) {
-        return aggregate(new HashMap<K, V>(), new AggregateFunction2<E, Map<K, V>>() {
+        return aggregate(new HashMap<K, V>(), new AggregateFunction<E, Map<K, V>>() {
             @Override
             public Map<K, V> apply(Map<K, V> map, E input) {
                 map.put(keyFunction.apply(input), valueFunction.apply(input));
@@ -84,7 +84,7 @@ public class FluentIterable2<E> extends FluentIterable<E> {
     public FluentIterable2<E> distinct() {
 
         final Set<E> set = aggregate(new LinkedHashSet<E>(),
-                new AggregateFunction2<E, Set<E>>() {
+                new AggregateFunction<E, Set<E>>() {
                     @Override
                     public Set<E> apply(Set<E> set, E input) {
                         set.add(input);
@@ -97,7 +97,7 @@ public class FluentIterable2<E> extends FluentIterable<E> {
 
     public FluentIterable2<E> distinct(Comparator<E> comparator) {
         final Set<E> set = aggregate(new TreeSet<E>(comparator),
-                new AggregateFunction2<E, Set<E>>() {
+                new AggregateFunction<E, Set<E>>() {
                     @Override
                     public Set<E> apply(Set<E> set, E input) {
                         set.add(input);
@@ -138,7 +138,7 @@ public class FluentIterable2<E> extends FluentIterable<E> {
 
     public <T> FluentIterable<Group<T, E>> groupBy(final Function<E, T> function) {
         final Map<T, List<E>> group = Maps.newHashMap();
-        aggregate(group, new AggregateFunction2<E, Map<T, List<E>>>() {
+        aggregate(group, new AggregateFunction<E, Map<T, List<E>>>() {
             @Override
             public Map<T, List<E>> apply(Map<T, List<E>> group, E input) {
                 final T key = function.apply(input);
@@ -198,11 +198,11 @@ public class FluentIterable2<E> extends FluentIterable<E> {
     }
 
 
-    public <T> T aggregate(final Class<T> type, final AggregateFunction2<E, T> function) {
+    public <T> T aggregate(final Class<T> type, final AggregateFunction<E, T> function) {
         return aggregate(defaultValue(type), function);
     }
 
-    public <T> T aggregate(final T first, final AggregateFunction2<E, T> function) {
+    public <T> T aggregate(final T first, final AggregateFunction<E, T> function) {
         final Iterator<E> iterator = this.iterator();
         T lastValue = first;
         while (iterator.hasNext()) {

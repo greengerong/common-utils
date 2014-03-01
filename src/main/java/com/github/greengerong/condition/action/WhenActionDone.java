@@ -27,7 +27,7 @@ public class WhenActionDone {
     }
 
 
-    public <T> void single(final T instance) {
+    public <T> void first(final T instance) {
         final Optional<WhenActionGroup> results = from(conditions).firstMatch(IsMatchCondition(instance));
         if (!results.isPresent() && otherwiseFunction != null) {
             execOtherwise(otherwiseFunction, instance);
@@ -38,7 +38,7 @@ public class WhenActionDone {
         }
     }
 
-    public <T> void all(final T instance) {
+    public <T> void pipe(final T instance) {
         final List<Boolean> results = from(conditions)
                 .filter(IsMatchCondition(instance))
                 .transform(new Function<WhenActionGroup, Boolean>() {

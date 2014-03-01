@@ -8,18 +8,18 @@ import java.util.List;
 
 import static com.github.greengerong.checker.Assert.checkNotNull;
 
-public class ThenFunction {
+public class WhenFunction {
 
     private List<WhenFunctionGroup> conditions = Lists.newArrayList();
 
-    private ThenFunction() {
+    private WhenFunction() {
     }
 
-    public static ThenFunction create() {
-        return new ThenFunction();
+    public static WhenFunction create() {
+        return new WhenFunction();
     }
 
-    public <T, E> ThenFunction then(Predicate<T> predicate, Function<T, E> function) {
+    public <T, E> WhenFunction when(Predicate<T> predicate, Function<T, E> function) {
         checkNotNull(predicate, "Predicate should be not null.");
         checkNotNull(function, "Function should be not null.");
         conditions.add(new WhenFunctionGroup(predicate, function));
@@ -32,11 +32,11 @@ public class ThenFunction {
     }
 
     public <T, E> E single(final T instance) {
-        return WhenFunctionDone.create(conditions).single(instance);
+        return WhenFunctionDone.create(conditions).first(instance);
     }
 
     public <T, E> List<E> all(final T instance) {
-        return WhenFunctionDone.create(conditions).all(instance);
+        return WhenFunctionDone.create(conditions).pipe(instance);
     }
 
 }
