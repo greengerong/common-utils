@@ -24,7 +24,7 @@ public class WhenFunctionTest {
         final Sex sex = condition()
                 .when(equalTo(1), returnWith(Sex.MALE))
                 .when(equalTo(2), returnWith(Sex.FEMALE))
-                .single(1);
+                .first(1);
 
 
         //when
@@ -38,7 +38,7 @@ public class WhenFunctionTest {
         //condition
         final Sex sex = condition()
                 .when(equalTo(2), returnWith(Sex.FEMALE))
-                .single(1);
+                .first(1);
 
         //when
         assertThat(sex, is(nullValue()));
@@ -53,7 +53,7 @@ public class WhenFunctionTest {
                 .when(equalTo(1), returnWith(Sex.MALE))
                 .when(equalTo(2), returnWith(Sex.FEMALE))
                 .when(anything(), returnWith(Sex.MALE))
-                .all(1);
+                .pipe(1);
 
         //when
         assertThat(sexes.size(), is(2));

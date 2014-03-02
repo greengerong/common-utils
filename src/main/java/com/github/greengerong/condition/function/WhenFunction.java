@@ -31,11 +31,11 @@ public class WhenFunction {
         return WhenFunctionDone.create(conditions, function);
     }
 
-    public <T, E> E single(final T instance) {
+    public <T, E> E first(final T instance) {
         return WhenFunctionDone.create(conditions).first(instance);
     }
 
-    public <T, E> List<E> all(final T instance) {
+    public <T, E> List<E> pipe(final T instance) {
         return WhenFunctionDone.create(conditions).pipe(instance);
     }
 
