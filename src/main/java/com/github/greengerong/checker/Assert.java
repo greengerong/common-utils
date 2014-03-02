@@ -2,7 +2,10 @@ package com.github.greengerong.checker;
 
 
 import com.google.common.base.Predicate;
+import org.apache.commons.io.FileUtils;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.text.MessageFormat;
 import java.util.List;
 
@@ -60,6 +63,25 @@ public class Assert {
             throw new CheckerRuntimeException();
         }
 
+        return reference;
+    }
+
+    public static String checkFileExists(String reference) {
+        return checkFileExists(reference, "File {0} not found.");
+    }
+
+    public static String checkFileExists(File reference) {
+        return checkFileExists(checkNotNull(reference), "File {0} not found.");
+    }
+
+    public static String checkFileExists(File reference, String message) {
+        return checkFileExists(checkNotNull(reference).getAbsolutePath(), message);
+    }
+
+    public static String checkFileExists(String reference, String message) {
+        if (!FileUtils.fileExists(checkNotBlank(reference))) {
+            throw new CheckerRuntimeException(new FileNotFoundException(MessageFormat.format(message, reference)));
+        }
         return reference;
     }
 
